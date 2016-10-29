@@ -1,7 +1,9 @@
 package nl.computerhok.cruddie;
 
+import nl.computerhok.cruddie.entity.Appservergroup;
 import nl.computerhok.cruddie.entity.Customer;
 import nl.computerhok.cruddie.entity.Orderr;
+import nl.computerhok.cruddie.repositories.AppservergroupRepository;
 import nl.computerhok.cruddie.repositories.CustomerRepository;
 import nl.computerhok.cruddie.repositories.OrderrRepository;
 import org.apache.commons.lang.RandomStringUtils;
@@ -74,7 +76,7 @@ public class CruddieApplication {
             orderrRepository.save(new Orderr("coffee",500,new Date(),customerRepository.findOne(3L)));
             orderrRepository.save(new Orderr("oliebollen",4711,new Date(),customerRepository.findOne(3L)));
 
-            // fetch all orders
+            // fetch all orderrs
             log.info("Orders found with findAll():");
             log.info("-------------------------------");
             for (Orderr order : orderrRepository.findAll()) {
@@ -94,6 +96,41 @@ public class CruddieApplication {
             log.info("--------------------------------------------");
             for (Orderr banana: orderrRepository.findByArticle("banana")) {
                 log.info(banana.toString());
+            }
+            log.info("");
+        };
+    }
+
+
+    @Bean
+    public CommandLineRunner appservergroupDataLoader(AppservergroupRepository appservergroupRepository) {
+        return (args) -> {
+            // save a couple of ags
+            appservergroupRepository.save(new Appservergroup("tl53", Appservergroup.Stage.t));
+            appservergroupRepository.save(new Appservergroup("tl99", Appservergroup.Stage.t));
+            appservergroupRepository.save(new Appservergroup("al14", Appservergroup.Stage.a));
+            appservergroupRepository.save(new Appservergroup("pl02", Appservergroup.Stage.p));
+
+            // fetch all ags
+            log.info("Appservergroups found with findAll():");
+            log.info("-------------------------------");
+            for (Appservergroup appservergroup : appservergroupRepository.findAll()) {
+                log.info(appservergroup.toString());
+            }
+            log.info("");
+
+            // fetch an individual ag by ID
+            Appservergroup appservergroup = appservergroupRepository.findOne(1L);
+            log.info("Appservergroup found with findOne(1L):");
+            log.info("--------------------------------");
+            log.info(appservergroup.toString());
+            log.info("");
+
+            // fetch ags by stage
+            log.info("Appservergroup found with findByStage('t'):");
+            log.info("--------------------------------------------");
+            for (Appservergroup ag: appservergroupRepository.findByStage(Appservergroup.Stage.t)) {
+                log.info(ag.toString());
             }
             log.info("");
         };
