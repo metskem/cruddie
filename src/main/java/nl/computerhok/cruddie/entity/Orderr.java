@@ -1,4 +1,4 @@
-package nl.computerhok.sbt.entity;
+package nl.computerhok.cruddie.entity;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 

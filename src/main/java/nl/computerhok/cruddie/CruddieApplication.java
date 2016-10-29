@@ -1,9 +1,9 @@
-package nl.computerhok.sbt;
+package nl.computerhok.cruddie;
 
-import nl.computerhok.sbt.entity.Customer;
-import nl.computerhok.sbt.entity.Orderr;
-import nl.computerhok.sbt.repositories.CustomerRepository;
-import nl.computerhok.sbt.repositories.OrderrRepository;
+import nl.computerhok.cruddie.entity.Customer;
+import nl.computerhok.cruddie.entity.Orderr;
+import nl.computerhok.cruddie.repositories.CustomerRepository;
+import nl.computerhok.cruddie.repositories.OrderrRepository;
 import org.apache.commons.lang.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

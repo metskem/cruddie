@@ -1,4 +1,4 @@
-package nl.computerhok.sbt.entity;
+package nl.computerhok.cruddie.entity;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
@@ -7,8 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
-
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Entity
 public class Customer {

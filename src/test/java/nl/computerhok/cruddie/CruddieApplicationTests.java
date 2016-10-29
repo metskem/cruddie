@@ -1,4 +1,4 @@
-package nl.computerhok.sbt;
+package nl.computerhok.cruddie;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

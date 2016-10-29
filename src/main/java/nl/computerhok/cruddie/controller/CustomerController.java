@@ -1,7 +1,7 @@
-package nl.computerhok.sbt.controller;
+package nl.computerhok.cruddie.controller;
 
-import nl.computerhok.sbt.repositories.CustomerRepository;
-import nl.computerhok.sbt.entity.Customer;
+import nl.computerhok.cruddie.repositories.CustomerRepository;
+import nl.computerhok.cruddie.entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;

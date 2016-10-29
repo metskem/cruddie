@@ -1,6 +1,6 @@
-package nl.computerhok.sbt.repositories;
+package nl.computerhok.cruddie.repositories;
 
-import nl.computerhok.sbt.entity.Orderr;
+import nl.computerhok.cruddie.entity.Orderr;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
