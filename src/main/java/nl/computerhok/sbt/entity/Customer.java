@@ -1,4 +1,6 @@
-package nl.computerhok.sbt.model;
+package nl.computerhok.sbt.entity;
+
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -6,12 +8,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+
 @Entity
 public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long customerid;
     private String firstName;
     private String lastName;
     private Date birthdate;
@@ -27,17 +31,11 @@ public class Customer {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Customer{");
-        sb.append("id=").append(id);
-        sb.append(", firstName='").append(firstName).append('\'');
-        sb.append(", lastName='").append(lastName).append('\'');
-        sb.append(", birthdate=").append(birthdate);
-        sb.append('}');
-        return sb.toString();
+        return ToStringBuilder.reflectionToString(this);
     }
 
     public Long getId() {
-        return id;
+        return customerid;
     }
 
     public String getFirstName() {

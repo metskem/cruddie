@@ -1,9 +1,13 @@
-package nl.computerhok.sbt.model;
+package nl.computerhok.sbt.entity;
+
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.util.Date;
 
 @Entity
@@ -11,33 +15,33 @@ public class Orderr {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long orderrid;
     private String article;
     private int amount;
     private Date orderdate;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "customerid")
+    private Customer customer;
+
+
     protected Orderr() {
     }
 
-    public Orderr(String article, int amount, Date orderdate) {
+    public Orderr(String article, int amount, Date orderdate, Customer customer) {
         this.article = article;
         this.amount = amount;
         this.orderdate = orderdate;
+        this.customer = customer;
     }
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Orderr{");
-        sb.append("id=").append(id);
-        sb.append(", article='").append(article).append('\'');
-        sb.append(", amount=").append(amount);
-        sb.append(", orderdate=").append(orderdate);
-        sb.append('}');
-        return sb.toString();
+        return ToStringBuilder.reflectionToString(this);
     }
 
-    public Long getId() {
-        return id;
+    public Long getOrderrid() {
+        return orderrid;
     }
 
     public String getArticle() {
@@ -63,4 +67,13 @@ public class Orderr {
     public void setOrderdate(Date orderdate) {
         this.orderdate = orderdate;
     }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
 }
