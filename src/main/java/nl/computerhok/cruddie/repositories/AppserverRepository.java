@@ -12,5 +12,6 @@ public interface AppserverRepository extends PagingAndSortingRepository<Appserve
     Appserver findByHostname(@Param("hostname") String hostname);
 
     List<Appserver> findByAppservergroupStage(@Param("stage")Appservergroup.Stage stage);
+    List<Appserver> findByAppservergroupName(@Param("name") String name);
 
 }
