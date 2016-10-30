@@ -11,18 +11,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import java.util.Date;
 
 @Entity
 public class Appserver {
 
-    public enum Location { Best, Boxtel}
+    public enum Location {Best, Boxtel}
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long appserverid;
 
-    @Column(nullable = false,length = 128,unique = true)
+    @Column(nullable = false, length = 128, unique = true)
     private String hostname;
 
     @Column(length = 1024)
@@ -41,7 +42,7 @@ public class Appserver {
     @Column(nullable = false)
     private Date lastchanged;
 
-    @OneToMany( orphanRemoval = true)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "appservergroupid", nullable = false)
     private Appservergroup appservergroup;
 
@@ -91,5 +92,65 @@ public class Appserver {
         return new HashCodeBuilder(17, 37)
                 .append(appserverid)
                 .toHashCode();
+    }
+
+    public Long getAppserverid() {
+        return appserverid;
+    }
+
+    public String getHostname() {
+        return hostname;
+    }
+
+    public void setHostname(String hostname) {
+        this.hostname = hostname;
+    }
+
+    public String getJvmargs() {
+        return jvmargs;
+    }
+
+    public void setJvmargs(String jvmargs) {
+        this.jvmargs = jvmargs;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public String getChangedby() {
+        return changedby;
+    }
+
+    public void setChangedby(String changedby) {
+        this.changedby = changedby;
+    }
+
+    public Date getCreation() {
+        return creation;
+    }
+
+    public void setCreation(Date creation) {
+        this.creation = creation;
+    }
+
+    public Date getLastchanged() {
+        return lastchanged;
+    }
+
+    public void setLastchanged(Date lastchanged) {
+        this.lastchanged = lastchanged;
+    }
+
+    public Appservergroup getAppservergroup() {
+        return appservergroup;
+    }
+
+    public void setAppservergroup(Appservergroup appservergroup) {
+        this.appservergroup = appservergroup;
     }
 }

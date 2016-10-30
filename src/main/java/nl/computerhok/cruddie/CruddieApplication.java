@@ -1,12 +1,11 @@
 package nl.computerhok.cruddie;
 
+import nl.computerhok.cruddie.entity.Appserver;
 import nl.computerhok.cruddie.entity.Appservergroup;
-import nl.computerhok.cruddie.entity.Customer;
-import nl.computerhok.cruddie.entity.Orderr;
+import nl.computerhok.cruddie.repositories.AppserverRepository;
 import nl.computerhok.cruddie.repositories.AppservergroupRepository;
-import nl.computerhok.cruddie.repositories.CustomerRepository;
-import nl.computerhok.cruddie.repositories.OrderrRepository;
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -23,84 +22,6 @@ public class CruddieApplication {
     public static void main(String[] args) {
         SpringApplication.run(CruddieApplication.class, args);
     }
-
-    @Bean
-    public CommandLineRunner customerDataLoader(CustomerRepository customerRepository) {
-        int NUM_CUSTOMERS = 999;
-        return (args) -> {
-            // save a couple of customers
-            customerRepository.save(new Customer("Jack", "Bauer", new Date()));
-            customerRepository.save(new Customer("Chloe", "O'Brian", new Date()));
-            customerRepository.save(new Customer("Kim", "Bauer", new Date()));
-            customerRepository.save(new Customer("David", "Palmer", new Date()));
-            customerRepository.save(new Customer("Michelle", "Dessler", new Date()));
-            customerRepository.save(new Customer("aap", "noot", new Date()));
-
-            // fetch all customers
-            log.info("Customers found with findAll():");
-            log.info("-------------------------------");
-            for (Customer cust : customerRepository.findAll()) {
-                log.info(cust.toString());
-            }
-
-            // fetch an individual customer by ID
-            Customer customer = customerRepository.findOne(1L);
-            log.info("Customer found with findOne(1L):");
-            log.info("--------------------------------");
-            log.info(customer.toString());
-            log.info("");
-
-            // fetch customers by last name
-            log.info("Customer found with findByLastName('Bauer'):");
-            log.info("--------------------------------------------");
-            for (Customer bauer : customerRepository.findByLastName("Bauer")) {
-                log.info(bauer.toString());
-            }
-            log.info("");
-
-            log.info("saving " + NUM_CUSTOMERS + " random customers");
-            for (int i=0;i<NUM_CUSTOMERS;i++) {
-                customerRepository.save(new Customer("firstname-" + RandomStringUtils.randomAlphanumeric(10), "lastname-"+RandomStringUtils.randomAlphanumeric(20), new Date()));
-            }
-            log.info("");
-            log.info("");
-        };
-    }
-
-    @Bean
-    public CommandLineRunner orderrDataLoader(OrderrRepository orderrRepository, CustomerRepository customerRepository) {
-        return (args) -> {
-            // save a couple of customers
-            orderrRepository.save(new Orderr("banana",5,new Date(), customerRepository.findOne(1L)));
-            orderrRepository.save(new Orderr("staples",500,new Date(), customerRepository.findOne(2L)));
-            orderrRepository.save(new Orderr("coffee",500,new Date(),customerRepository.findOne(3L)));
-            orderrRepository.save(new Orderr("oliebollen",4711,new Date(),customerRepository.findOne(3L)));
-
-            // fetch all orderrs
-            log.info("Orders found with findAll():");
-            log.info("-------------------------------");
-            for (Orderr order : orderrRepository.findAll()) {
-                log.info(order.toString());
-            }
-            log.info("");
-
-            // fetch an individual order by ID
-            Orderr order = orderrRepository.findOne(1L);
-            log.info("Customer found with findOne(1L):");
-            log.info("--------------------------------");
-            log.info(order.toString());
-            log.info("");
-
-            // fetch orders by article
-            log.info("Orderr found with findByArticle('banana'):");
-            log.info("--------------------------------------------");
-            for (Orderr banana: orderrRepository.findByArticle("banana")) {
-                log.info(banana.toString());
-            }
-            log.info("");
-        };
-    }
-
 
     @Bean
     public CommandLineRunner appservergroupDataLoader(AppservergroupRepository appservergroupRepository) {
@@ -132,6 +53,52 @@ public class CruddieApplication {
             for (Appservergroup ag: appservergroupRepository.findByStage(Appservergroup.Stage.t)) {
                 log.info(ag.toString());
             }
+            log.info("");
+
+            // fetch ags by name like
+            log.info("Appservergroup found with findByNameLike('tl'):");
+            log.info("--------------------------------------------");
+            for (Appservergroup ag: appservergroupRepository.findByNameLike("tl%")) {
+                log.info(ag.toString());
+            }
+            log.info("");
+
+        };
+    }
+
+    @Bean
+    public CommandLineRunner appserverDataLoader(AppserverRepository appserverRepository, AppservergroupRepository appservergroupRepository) {
+        int NUM_APPSERVERS = 99;
+        return (args) -> {
+            // save a couple of ags
+            appserverRepository.save(new Appserver("lsrv4711","-Xms500M", Appserver.Location.Best,"metskeh",new Date(),new Date(),appservergroupRepository.findByName("tl53")));
+            appserverRepository.save(new Appserver("lsrv4712","-Xms500M -Djavax.net.debug=true", Appserver.Location.Boxtel,"troijenc",new Date(),new Date(),appservergroupRepository.findByName("tl53")));
+            appserverRepository.save(new Appserver("lsrv2313","-Xms500M -whatever", Appserver.Location.Boxtel,"troijenc",new Date(),new Date(),appservergroupRepository.findByName("pl02")));
+
+            log.info("saving " + NUM_APPSERVERS + " random appservers");
+            for (int i=0;i<NUM_APPSERVERS;i++) {
+                appserverRepository.save(new Appserver("lsrv1" + StringUtils.leftPad(String.valueOf(i),3,"0"), "jvm arg xxxx",Appserver.Location.Boxtel,"metskeh", new Date(), new Date(),appservergroupRepository.findByName("pl02")));
+            }
+
+            // fetch all appservers with a certain stage
+            log.info("Appservers found with findByAppservergroupStage():");
+            log.info("-------------------------------");
+            for (Appserver appserver : appserverRepository.findByAppservergroupStage(Appservergroup.Stage.t)) {
+                log.info(appserver.toString());
+            }
+            log.info("");
+
+            // fetch an individual appserver by ID
+            Appserver appserver = appserverRepository.findOne(1L);
+            log.info("Appserver found with findOne(1L):");
+            log.info("--------------------------------");
+            log.info(appserver.toString());
+            log.info("");
+
+            // find appservers by hostname
+            log.info("Appservers found with findByHostname(\"lsrv4711\")):");
+            log.info("--------------------------------");
+            log.info(appserverRepository.findByHostname("lsrv4711").toString());
             log.info("");
         };
     }

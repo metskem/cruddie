@@ -17,7 +17,7 @@ public class Appservergroup {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long appservergroupid;
 
-    @Column(nullable = false, length = 64)
+    @Column(nullable = false, length = 64, unique = true)
     private String name;
 
     @Column(nullable = false)
@@ -30,6 +30,16 @@ public class Appservergroup {
     public Appservergroup(String name, Stage stage) {
         this.name = name;
         this.stage = stage;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Appservergroup{");
+        sb.append("appservergroupid=").append(appservergroupid);
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", stage=").append(stage);
+        sb.append('}');
+        return sb.toString();
     }
 
     public Long getAppservergroupid() {
