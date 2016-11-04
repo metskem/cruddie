@@ -1,4 +1,4 @@
-package nl.computerhok.cruddie.repositories;
+package nl.computerhok.cruddie.repository;
 
 import nl.computerhok.cruddie.entity.Appserver;
 import nl.computerhok.cruddie.entity.Appservergroup;

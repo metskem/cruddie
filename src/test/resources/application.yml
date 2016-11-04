@@ -9,8 +9,8 @@ logging:
     org:
       springframework:
         data:
-          jpa: warn
+          jpa: info
         test: warn
     nl:
       computerhok:
-        cruddie: info
+        cruddie: warn
