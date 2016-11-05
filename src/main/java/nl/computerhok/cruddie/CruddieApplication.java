@@ -27,9 +27,9 @@ public class CruddieApplication {
     public CommandLineRunner dataLoader(AppserverRepository appserverRepository, AppservergroupRepository appservergroupRepository) {
         return (args) -> {
 
-            // data is loaded by spring itself, see src/test/resources/data.sql
+            // during tests, data is loaded by spring itself, see src/test/resources/data.sql
 
-            appservergroupRepository.save(new Appservergroup("random", Appservergroup.Stage.t,new Date(),"metskeh", new Date()));
+            appservergroupRepository.save(new Appservergroup("random", Appservergroup.Stage.t,"metskeh"));
 
             // fetch all ags
             log.info("Appservergroups found with findAll():");
@@ -61,7 +61,7 @@ public class CruddieApplication {
 
             log.info("saving " + NUM_APPSERVERS + " random appservers");
             for (int i=0;i<NUM_APPSERVERS;i++) {
-                if (appserverRepository.save(new Appserver("lsrv1" + StringUtils.leftPad(String.valueOf(i),3,"0"), "jvm arg xxxx",Appserver.Location.Boxtel,"metskeh",appservergroupRepository.findByName("random"))) == null) {
+                if (appserverRepository.save(new Appserver("lsrv1" + StringUtils.leftPad(String.valueOf(i),3,"0"), "jvm arg xxxx",Appserver.Location.Boxtel,appservergroupRepository.findByName("random"),"metskeh")) == null) {
                     log.error("save failed for appserver");
                     return;
                 }

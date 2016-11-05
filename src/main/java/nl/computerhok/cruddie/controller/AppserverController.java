@@ -19,15 +19,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.net.URI;
-import java.net.URISyntaxException;
 
 @Component
-@Path("/appservers/v1")
+@Path("/appserver/v1")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class AppserverController {
     private static final Logger LOG = LoggerFactory.getLogger(AppserverController.class);
-    public static final String RESOURCE_PATH = "/appservers/v1";
+    public static final String RESOURCE_PATH = "/appserver/v1";
     private AppserverRepository appserverRepository;
 
     @Autowired
@@ -42,9 +41,11 @@ public class AppserverController {
     }
 
     @DELETE
+    @Path("{id}")
     @ApiOperation(value = "delete the appserver")
     public Response delete(@ApiParam(value = "the id of the appserver to delete") @PathParam("id") long id) {
         appserverRepository.delete(id);
+        LOG.warn("deleted appserver with id=" + id);
         return Response.status(Response.Status.OK).build();
     }
 
@@ -56,12 +57,18 @@ public class AppserverController {
     }
 
     @POST
-    public Response save(@ApiParam(value = "the appserver to save", required = true) Appserver appserver) throws URISyntaxException {
-        LOG.error("trying to save " + appserver + "\n");
-        Appserver as = appserverRepository.save(appserver);
-        if (as == null) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("failed to insert appserver").build();
+    @ApiOperation(value = "insert one appserver")
+    public Response save(@ApiParam(value = "the appserver to save", required = true) Appserver as) {
+        try {
+            LOG.info("trying to save " + as);
+            Appserver savedAs = appserverRepository.save(as);
+            if (savedAs == null) {
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("failed to insert ").build();
+            }
+            LOG.warn("saved " + savedAs);
+            return Response.created(new URI(RESOURCE_PATH + "/" + savedAs.getId())).build();
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
         }
-        return Response.created(new URI(RESOURCE_PATH + "/" + as.getId())).build();
     }
 }

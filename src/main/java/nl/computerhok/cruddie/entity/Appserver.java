@@ -4,11 +4,18 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
 public class Appserver extends BaseEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     public enum Location {Best, Boxtel}
 
@@ -29,7 +36,7 @@ public class Appserver extends BaseEntity {
     protected Appserver() {
     }
 
-    public Appserver(String hostname, String jvmargs, Location location, String lastchangedby, Appservergroup appservergroup) {
+    public Appserver(String hostname, String jvmargs, Location location, Appservergroup appservergroup, String lastchangedby) {
         setLastchangedby(lastchangedby);
         this.hostname = hostname;
         this.jvmargs = jvmargs;
@@ -40,14 +47,18 @@ public class Appserver extends BaseEntity {
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("Appserver{");
-        sb.append("id='").append(getId()).append('\'');
-        sb.append("hostname='").append(hostname).append('\'');
+        sb.append("id=").append(id);
+        sb.append(", hostname='").append(hostname).append('\'');
         sb.append(", jvmargs='").append(jvmargs).append('\'');
         sb.append(", location=").append(location);
         sb.append(", appservergroup=").append(appservergroup);
         sb.append('}');
         return sb.toString();
     }
+
+    public Long getId() {        return id;    }
+
+    public void setId(Long id) {        this.id = id;}
 
     public String getHostname() {
         return hostname;
