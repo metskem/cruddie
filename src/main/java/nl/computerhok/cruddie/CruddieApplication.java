@@ -23,72 +23,72 @@ public class CruddieApplication {
         SpringApplication.run(CruddieApplication.class, args);
     }
 
-    @Bean
-    public CommandLineRunner dataLoader(AppserverRepository appserverRepository, AppservergroupRepository appservergroupRepository) {
-        return (args) -> {
-
-            // during tests, data is loaded by spring itself, see src/test/resources/data.sql
-
-            appservergroupRepository.save(new Appservergroup("random", Appservergroup.Stage.t,"metskeh"));
-
-            // fetch all ags
-            log.info("Appservergroups found with findAll():");
-            log.info("-------------------------------");
-            for (Appservergroup appservergroup : appservergroupRepository.findAll()) {
-                log.info(appservergroup.toString());
-            }
-            log.info("");
-
-            // fetch ags by stage
-            log.info("Appservergroup found with findByStage('t'):");
-            log.info("--------------------------------------------");
-            for (Appservergroup ag: appservergroupRepository.findByStage(Appservergroup.Stage.t)) {
-                log.info(ag.toString());
-            }
-            log.info("");
-
-            // fetch ags by name like
-            log.info("Appservergroup found with findByNameLike('tl'):");
-            log.info("--------------------------------------------");
-            int numFound=0;
-            for (Appservergroup ag: appservergroupRepository.findByNameLike("tl%")) {
-                numFound++;
-            }
-            log.info("found " + numFound + " servers");
-            log.info("");
-
-            // data is loaded by spring itself, see src/test/resources/data.sql
-
-            log.info("saving " + NUM_APPSERVERS + " random appservers");
-            for (int i=0;i<NUM_APPSERVERS;i++) {
-                if (appserverRepository.save(new Appserver("lsrv1" + StringUtils.leftPad(String.valueOf(i),3,"0"), "jvm arg xxxx",Appserver.Location.Boxtel,appservergroupRepository.findByName("random"),"metskeh")) == null) {
-                    log.error("save failed for appserver");
-                    return;
-                }
-            }
-
-            // fetch all appservers with a certain stage
-            log.info("Appservers found with findByAppservergroupStage(t):");
-            log.info("-------------------------------");
-            numFound=0;
-            for (Appserver appserver : appserverRepository.findByAppservergroupStage(Appservergroup.Stage.t)) {
-                numFound++;
-            }
-            log.info("found " + numFound + " servers");
-            log.info("");
-
-            // fetch an individual appserver by ID
-            Appserver appserver = appserverRepository.findOne(1L);
-            log.info("Appserver found with findOne(1L):");
-            log.info("--------------------------------");
-            log.info(appserver.toString());
-            log.info("");
-
-            // find appservers by hostname
-            log.info("Appservers found with findByHostname(\"lsrv1000\")):");
-            log.info("--------------------------------");
-            log.info(appserverRepository.findByHostname("lsrv1000").toString());
-            log.info("");
-        };
-    }
+//    @Bean
+//    public CommandLineRunner dataLoader(AppserverRepository appserverRepository, AppservergroupRepository appservergroupRepository) {
+//        return (args) -> {
+//
+//            // during tests, data is loaded by spring itself, see src/test/resources/data.sql
+//
+//            appservergroupRepository.save(new Appservergroup("random", Appservergroup.Stage.t,"metskeh"));
+//
+//            // fetch all ags
+//            log.info("Appservergroups found with findAll():");
+//            log.info("-------------------------------");
+//            for (Appservergroup appservergroup : appservergroupRepository.findAll()) {
+//                log.info(appservergroup.toString());
+//            }
+//            log.info("");
+//
+//            // fetch ags by stage
+//            log.info("Appservergroup found with findByStage('t'):");
+//            log.info("--------------------------------------------");
+//            for (Appservergroup ag: appservergroupRepository.findByStage(Appservergroup.Stage.t)) {
+//                log.info(ag.toString());
+//            }
+//            log.info("");
+//
+//            // fetch ags by name like
+//            log.info("Appservergroup found with findByNameLike('tl'):");
+//            log.info("--------------------------------------------");
+//            int numFound=0;
+//            for (Appservergroup ag: appservergroupRepository.findByNameLike("tl%")) {
+//                numFound++;
+//            }
+//            log.info("found " + numFound + " servers");
+//            log.info("");
+//
+//            // data is loaded by spring itself, see src/test/resources/data.sql
+//
+//            log.info("saving " + NUM_APPSERVERS + " random appservers");
+//            for (int i=0;i<NUM_APPSERVERS;i++) {
+//                if (appserverRepository.save(new Appserver("lsrv1" + StringUtils.leftPad(String.valueOf(i),3,"0"), "jvm arg xxxx",Appserver.Location.Boxtel,appservergroupRepository.findByName("random"),"metskeh")) == null) {
+//                    log.error("save failed for appserver");
+//                    return;
+//                }
+//            }
+//
+//            // fetch all appservers with a certain stage
+//            log.info("Appservers found with findByAppservergroupStage(t):");
+//            log.info("-------------------------------");
+//            numFound=0;
+//            for (Appserver appserver : appserverRepository.findByAppservergroupStage(Appservergroup.Stage.t)) {
+//                numFound++;
+//            }
+//            log.info("found " + numFound + " servers");
+//            log.info("");
+//
+//            // fetch an individual appserver by ID
+//            Appserver appserver = appserverRepository.findOne(1L);
+//            log.info("Appserver found with findOne(1L):");
+//            log.info("--------------------------------");
+//            log.info(appserver.toString());
+//            log.info("");
+//
+//            // find appservers by hostname
+//            log.info("Appservers found with findByHostname(\"lsrv1000\")):");
+//            log.info("--------------------------------");
+//            log.info(appserverRepository.findByHostname("lsrv1000").toString());
+//            log.info("");
+//        };
+//    }
 }
