@@ -11,6 +11,9 @@ logging:
         data:
           jpa: warn
         test: warn
+      hibernate:
+        engine:
+          jdbc: debug
     nl:
       computerhok:
         cruddie: info

@@ -25,13 +25,13 @@ public abstract class BaseEntity {
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(nullable = false,columnDefinition = "timestamp default CURRENT_TIMESTAMP")
+    @Column(nullable = false, updatable = false)
     private Date created;
 
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(nullable = false, columnDefinition = "timestamp default CURRENT_TIMESTAMP")
+    @Column(nullable = false)
     private Date lastchanged;
 
     @Column(columnDefinition = "varchar(64) default 'unknown' not null")
