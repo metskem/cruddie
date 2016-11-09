@@ -15,7 +15,7 @@ Have a "Base" entity class with the following field definition (example for last
 ### What is the way to perform server-side (input) validation ?
 
 You can annotate the fields in your Entity beans with the javax.validation.constraints.Pattern annotation and use regexes in there.
-
+And you can also use the callback methods (like javax.persistence.PrePersist and more)
 
 ### Can I generate all SQL DDL ?
 
