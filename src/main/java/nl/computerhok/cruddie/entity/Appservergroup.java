@@ -1,5 +1,8 @@
 package nl.computerhok.cruddie.entity;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -7,10 +10,17 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PostPersist;
+import javax.persistence.PostRemove;
+import javax.persistence.PostUpdate;
+import javax.persistence.PrePersist;
+import javax.persistence.PreRemove;
+import javax.persistence.PreUpdate;
 import javax.validation.constraints.Pattern;
 
 @Entity
 public class Appservergroup extends BaseEntity {
+    private static final Logger LOG = LoggerFactory.getLogger(Appservergroup.class);
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -48,13 +58,27 @@ public class Appservergroup extends BaseEntity {
         return sb.toString();
     }
 
-    public Long getId() {
-        return id;
-    }
+    @PrePersist
+    public void prepersist() {        LOG.warn("prepersisting " + this);    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @PostPersist
+    public void postpersist() {        LOG.warn("postpersisting " + this);    }
+
+    @PreRemove
+    public void preremove() {        LOG.warn("preremoving " + this);    }
+
+    @PostRemove
+    public void postremove() {        LOG.warn("postremoving " + this);    }
+
+    @PreUpdate
+    public void preupdate() {        LOG.warn("preupdating " + this);    }
+
+    @PostUpdate
+    public void postupdate() {        LOG.warn("postupdating " + this);    }
+
+    public Long getId() {        return id;}
+
+    public void setId(Long id) {        this.id = id;}
 
     public String getName() {
         return name;
