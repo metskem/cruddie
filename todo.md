@@ -1,6 +1,7 @@
 ### loading testdata into sql tables ?
 
-create a file src/test/resources/data.sql and put your insert statements there.
+create a file src/test/resources/data.sql and put your insert statements there, that will load the data only during test. 
+If you put it in src/main/resources/data.sql it will load it during test and also during springboot:run 
 
 ### how to define sql date columns with "on update current timestamp" ?
 
@@ -12,6 +13,9 @@ Have a "Base" entity class with the following field definition (example for last
     private Date lastchanged;
 
 ### What is the way to perform server-side (input) validation ?
+
+You can annotate the fields in your Entity beans with the javax.validation.constraints.Pattern annotation and use regexes in there.
+
 
 ### Can I generate all SQL DDL ?
 

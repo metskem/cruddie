@@ -7,6 +7,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Pattern;
 
 @Entity
 public class Appservergroup extends BaseEntity {
@@ -15,10 +16,14 @@ public class Appservergroup extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    public enum Stage { d, t, a, p}
+    public enum Stage {d, t, a, p}
 
     @Column(nullable = false, length = 64, unique = true)
     private String name;
+
+    @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "{invalid.email}")
+    @Column(length = 1024)
+    private String contact;
 
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
@@ -43,9 +48,13 @@ public class Appservergroup extends BaseEntity {
         return sb.toString();
     }
 
-    public Long getId() {        return id;    }
+    public Long getId() {
+        return id;
+    }
 
-    public void setId(Long id) {        this.id = id;    }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -60,4 +69,8 @@ public class Appservergroup extends BaseEntity {
     }
 
     public void setStage(Stage stage) {        this.stage = stage;    }
+
+    public String getContact() {        return contact;   }
+
+    public void setContact(String contact) {        this.contact = contact;    }
 }
