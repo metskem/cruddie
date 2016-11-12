@@ -35,6 +35,17 @@ You can have data loaded from data.sql. Or, for example, data-h2.sql, but then y
 
 ### How to handle security (authentication + authorisation) ?
 
+Spring authentication:
+http://docs.spring.io/spring-security/site/docs/current/reference/html/jc.html  
+
+http://docs.spring.io/spring-boot/docs/current/reference/html/howto-security.html
+
 ### Which client frameworks to use?
 
 angular ? bootstrap? angular material?
+
+### How to arrange for catching all exceptions from the controllers and never leak data to clients?
+
+### How to do integration testing, any nifty spring stuff there?
+
+### How to use the Pageable when doing REST calls?
