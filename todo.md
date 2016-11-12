@@ -49,3 +49,13 @@ angular ? bootstrap? angular material?
 ### How to do integration testing, any nifty spring stuff there?
 
 ### How to use the Pageable when doing REST calls?
+
+This is very simple. Just add the Pageable parameter to the REST method in your controller:
+
+    @RequestMapping(value = PATH, method = RequestMethod.GET)
+    public Iterable<Appservergroup> list(Pageable pageable) {
+        return appservergroupRepository.findAll(pageable);
+    }
+
+You can then use the "default" request parameters "page" , "size" and "sort". 
+See also http://docs.spring.io/spring-data/jpa/docs/current/reference/html/#core.web 

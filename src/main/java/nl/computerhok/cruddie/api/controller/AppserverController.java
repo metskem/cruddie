@@ -5,6 +5,7 @@ import nl.computerhok.cruddie.repository.AppserverRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,14 +24,14 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RestController
 public class AppserverController {
     private final static Logger LOG = LoggerFactory.getLogger(AppserverController.class);
-    public final static String PATH = "/appserver/v2";
+    public final static String PATH = "/v1/appserver";
 
     @Autowired
     AppserverRepository appserverRepository;
 
     @RequestMapping(value = PATH, method = RequestMethod.GET)
-    public Iterable<Appserver> list() {
-        return appserverRepository.findAll();
+    public Iterable<Appserver> list(Pageable pageable) {
+        return appserverRepository.findAll(pageable);
     }
 
     @RequestMapping(value = PATH + "/{id}", method = RequestMethod.GET)
