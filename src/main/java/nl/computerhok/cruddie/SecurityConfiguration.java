@@ -27,7 +27,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .roles("USER"); // ... etc.
     }
 
-    // TODO the following disables form-login
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
