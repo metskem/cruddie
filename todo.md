@@ -64,3 +64,7 @@ See also http://docs.spring.io/spring-data/jpa/docs/current/reference/html/#core
 
 Well, very nice, see http://www.baeldung.com/swagger-2-documentation-for-spring-rest-api 
 Adde 2 deps to your pom (springfox-swagger2 and springfox-swagger-ui), create the SwaggerConfig class and point your browser to http://localhost:8080/swagger-uit.html  
+
+### How to change the default favicon.ico?
+
+Just place a new favicon.ico file in src/main/resources/static
