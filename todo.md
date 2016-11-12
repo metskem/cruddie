@@ -59,3 +59,8 @@ This is very simple. Just add the Pageable parameter to the REST method in your 
 
 You can then use the "default" request parameters "page" , "size" and "sort". 
 See also http://docs.spring.io/spring-data/jpa/docs/current/reference/html/#core.web 
+
+### Swagger api documentation, how does that work in spring boot?
+
+Well, very nice, see http://www.baeldung.com/swagger-2-documentation-for-spring-rest-api 
+Adde 2 deps to your pom (springfox-swagger2 and springfox-swagger-ui), create the SwaggerConfig class and point your browser to http://localhost:8080/swagger-uit.html  

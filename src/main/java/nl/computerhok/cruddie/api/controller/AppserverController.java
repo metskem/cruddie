@@ -1,5 +1,7 @@
 package nl.computerhok.cruddie.api.controller;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import nl.computerhok.cruddie.entity.Appserver;
 import nl.computerhok.cruddie.repository.AppserverRepository;
 import org.slf4j.Logger;
@@ -40,13 +42,14 @@ public class AppserverController {
     }
 
     @RequestMapping(value = PATH + "/{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable("id") long id) {
+    public void delete(@ApiParam(value = "specify the id of the appserver",required = true) @PathVariable("id") long id) {
         appserverRepository.delete(id);
         LOG.warn("deleted appserver, id=" + id);
     }
 
     @RequestMapping(value = PATH, method = RequestMethod.POST)
     @ResponseStatus(CREATED)
+    @ApiOperation(value = "Minimal required parameters are: hostname, location, appservergroup.id, lastchangedby")
     public void create(@RequestBody Appserver appserver, HttpServletRequest request, HttpServletResponse response) {
         Appserver savedAs = appserverRepository.save(appserver);
         LOG.warn("saved " + savedAs);

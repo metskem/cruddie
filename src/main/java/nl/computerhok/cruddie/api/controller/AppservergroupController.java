@@ -1,5 +1,6 @@
 package nl.computerhok.cruddie.api.controller;
 
+import io.swagger.annotations.ApiOperation;
 import nl.computerhok.cruddie.entity.Appservergroup;
 import nl.computerhok.cruddie.repository.AppservergroupRepository;
 import org.slf4j.Logger;
@@ -47,6 +48,7 @@ public class AppservergroupController {
 
     @RequestMapping(value = PATH, method = RequestMethod.POST)
     @ResponseStatus(CREATED)
+    @ApiOperation(value = "Minimal required parameters are: stage, name, contact, lastchangedby")
     public void create(@RequestBody Appservergroup appservergroup, HttpServletRequest request, HttpServletResponse response) {
         Appservergroup savedAg = appservergroupRepository.save(appservergroup);
         LOG.warn("saved " + savedAg);
