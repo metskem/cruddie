@@ -1,16 +1,23 @@
 <!doctype html>
 <html>
 <head>
-    <script src="../js/jquery-3.1.1.js"></script>
+    <!--<script src="../js/jquery-3.1.1.js"></script>-->
     <script src="../js/angular-1.5.8.js"></script>
-    <script src="../js/ui-grid-3.2.9.js"></script>
+    <!--<script src="../js/ui-grid-3.2.9.js"></script>-->
     <script src="../js/appserver-ag-grid.js"></script>
 </head>
-<body data-ng-app="appserverService" data-ng-controller="appserverController as ctrl">
+<body ng-app="appserverApp">
 
-<div class="main">
-    <div class="container">
-        <div style="width: 100%; height: 850px;" ag-grid="ctrl.gridOptions" class="ag-fresh" > </div>
+<div class="main" ng-controller="appserverController">
+    <div ng-repeat="appserver in appservers.content">
+        <div>
+            <p>{{ appserver.id|number }}</p>
+            <p>{{ appserver.hostname }}</p>
+            <p>{{ appserver.location }}</p>
+            <p>{{ appserver.created|date }}</p>
+            <p>{{ appserver.lastchanged|date }}</p>
+            <p>{{ appserver.lastchangedby}}</p>
+        </div>
     </div>
 </div>
 
