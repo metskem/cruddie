@@ -1,23 +1,51 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/bootstrap-3.3.7.min.css"/>
     <!--<script src="../js/jquery-3.1.1.js"></script>-->
     <script src="../js/angular-1.5.8.js"></script>
     <!--<script src="../js/ui-grid-3.2.9.js"></script>-->
+    <script src="../js/smart-table.js"></script>
     <script src="../js/appserver-ag-grid.js"></script>
 </head>
 <body ng-app="appserverApp">
 
-<div class="main" ng-controller="appserverController">
-    <div ng-repeat="appserver in appservers.content">
-        <div>
-            <p>{{ appserver.id|number }}</p>
-            <p>{{ appserver.hostname }}</p>
-            <p>{{ appserver.location }}</p>
-            <p>{{ appserver.created|date }}</p>
-            <p>{{ appserver.lastchanged|date }}</p>
-            <p>{{ appserver.lastchangedby }}</p>
-        </div>
+<div class="container" ng-controller="appserverController">
+        <table st-table="displayedCollection" st-safe-src="appservers.content" class="table table-striped">
+            <thead>
+            <tr>
+                <th st-sort="id">id</th>
+                <th st-sort="hostname" st-sort-default="true">hostname</th>
+                <th st-sort="location">location</th>
+                <th>jvmargs</th>
+                <th st-sort="created">created</th>
+                <th st-sort="lastchanged">lastchanged</th>
+                <th st-sort="lastchangedby">lastchangedby</th>
+            </tr>
+            <tr>
+                <th><input st-search="id" placeholder="search for id" class="input-sm form-control" type="search"/></th>
+                <th><input st-search="hostname" placeholder="search for hostname" class="input-sm form-control" type="search"/></th>
+                <th colspan="5"><input st-search="" class="form-control" placeholder="search other" type="text"/></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="appserver in displayedCollection">
+                <td>{{ appserver.id|number }}</td>
+                <td>
+                    <mark>{{ appserver.hostname }}</mark>
+                </td>
+                <td>{{ appserver.location }}</td>
+                <td>
+                    <small>{{ appserver.jvmargs }}</small>
+                </td>
+                <td>{{ appserver.created|date }}</td>
+                <td>{{ appserver.lastchanged|date }}</td>
+                <td>{{ appserver.lastchangedby }}</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 

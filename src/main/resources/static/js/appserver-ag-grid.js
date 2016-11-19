@@ -1,4 +1,4 @@
-var app = angular.module('appserverApp', []);
+var app = angular.module('appserverApp', ['smart-table']);
 
 app.controller('appserverController', ['$scope', 'service', function($scope, service) {
   service.success(function(data) {
