@@ -13,6 +13,7 @@ app.factory('service', ['$http', function($http) {
               return data;
             })
             .error(function(err) {
+              alert('error:' + err);
               return err;
             });
 }]);

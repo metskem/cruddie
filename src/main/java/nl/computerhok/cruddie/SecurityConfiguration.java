@@ -30,7 +30,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests().regexMatchers("/v1/.*")
+                .authorizeRequests().regexMatchers("(/html/.*|/v1/.*)")
                 .authenticated()
                 .and()
                 .csrf().disable()
