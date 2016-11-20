@@ -11,21 +11,35 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.util.Date;
 
 @SpringBootApplication
-public class CruddieApplication {
-    public static final int NUM_APPSERVERS = 9;
+public class CruddieApplication extends WebMvcConfigurerAdapter{
+    public static final int NUM_APPSERVERS = 5000;
     private static final Logger log = LoggerFactory.getLogger(CruddieApplication.class);
 
     public static void main(String[] args) {
         SpringApplication.run(CruddieApplication.class, args);
     }
 
-//    @Bean
-//    public CommandLineRunner dataLoader(AppserverRepository appserverRepository, AppservergroupRepository appservergroupRepository) {
-//        return (args) -> {
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        //
+        // for easy developing/testing static content , without having to springboot:run every time
+        // REMOVE When creating a final runnable jar of course !!!
+        //
+        registry.addResourceHandler("/html/**").addResourceLocations("file:///home/metskem/workspace/cruddie/src/main/resources/static/html/").setCachePeriod(0);
+        registry.addResourceHandler("/css/**").addResourceLocations("file:///home/metskem/workspace/cruddie/src/main/resources/static/css/").setCachePeriod(0);
+        registry.addResourceHandler("/js/**").addResourceLocations("file:///home/metskem/workspace/cruddie/src/main/resources/static/js/").setCachePeriod(0);
+    }
+
+    @Bean
+    public CommandLineRunner dataLoader(AppserverRepository appserverRepository, AppservergroupRepository appservergroupRepository) {
+        return (args) -> {
 //
 //            // during tests, data is loaded by spring itself, see src/test/resources/data.sql
 //
@@ -59,13 +73,13 @@ public class CruddieApplication {
 //
 //            // data is loaded by spring itself, see src/test/resources/data.sql
 //
-//            log.info("saving " + NUM_APPSERVERS + " random appservers");
-//            for (int i=0;i<NUM_APPSERVERS;i++) {
-//                if (appserverRepository.save(new Appserver("lsrv1" + StringUtils.leftPad(String.valueOf(i),3,"0"), "jvm arg xxxx",Appserver.Location.Boxtel,appservergroupRepository.findByName("random"),"metskeh")) == null) {
-//                    log.error("save failed for appserver");
-//                    return;
-//                }
-//            }
+            log.info("saving " + NUM_APPSERVERS + " random appservers");
+            for (int i=0;i<NUM_APPSERVERS;i++) {
+                if (appserverRepository.save(new Appserver("lsrv1" + StringUtils.leftPad(String.valueOf(i),3,"0"), "jvm arg xxxx yyyyyy zzzzz aaaaaaaaa bbbbbbbbbbbbb nnnnnnnnnnnnnnnnnnnnnnn 1 2 3 4 5 6 7 8 90 llll",Appserver.Location.Boxtel,appservergroupRepository.findByName("pl02"),"metskeh")) == null) {
+                    log.error("save failed for appserver");
+                    return;
+                }
+            }
 //
 //            // fetch all appservers with a certain stage
 //            log.info("Appservers found with findByAppservergroupStage(t):");
@@ -89,6 +103,6 @@ public class CruddieApplication {
 //            log.info("--------------------------------");
 //            log.info(appserverRepository.findByHostname("lsrv1000").toString());
 //            log.info("");
-//        };
-//    }
+        };
+    }
 }

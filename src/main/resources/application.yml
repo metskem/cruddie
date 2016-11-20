@@ -16,8 +16,8 @@ logging:
         test: warn
       hibernate:
         engine:
-          jdbc: debug
-        SQL: debug
+          jdbc: info
+        SQL: info
     nl:
       computerhok:
         cruddie: info
