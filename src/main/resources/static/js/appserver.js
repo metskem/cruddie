@@ -1,14 +1,20 @@
 var app = angular.module('appserverApp', ['smart-table']);
 
-app.controller('appserverController', ['$scope', 'service', function($scope, service) {
-  service.success(function(data) {
+app.controller('appserverController', ['$scope', 'list', '$http',function($scope, list, $http) {
+  list.success(function(data) {
     $scope.appservers = data;
     $scope.itemsByPage=25;
   });
+
+  $scope.removeRow = function(idx,id) {
+    console.log("removing row, local=" + idx + ", remote="+id);
+    $http.delete('/v1/appserver/'+ id);
+    $scope.displayedCollection.splice(idx, 1);
+  }
+
 }]);
 
-
-app.factory('service', ['$http', function($http) {
+app.factory('list', ['$http', function($http) {
   return $http.get('/v1/appserver?size=99999')
             .success(function(data) {
               return data;

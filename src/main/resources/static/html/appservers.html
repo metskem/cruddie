@@ -8,7 +8,7 @@
     <script src="../js/angular-1.5.8.js"></script>
     <!--<script src="../js/ui-grid-3.2.9.js"></script>-->
     <script src="../js/smart-table.js"></script>
-    <script src="../js/appserver-ag-grid.js"></script>
+    <script src="../js/appserver.js"></script>
 </head>
 
 <body ng-app="appserverApp">
@@ -16,13 +16,11 @@
 <div class="row">
     <div class="col-sm-1">left margin here</div>
     <div class="col-sm-11" ng-controller="appserverController">
-        <table st-table="displayedCollection" st-safe-src="appservers.content"
-               class="table table-striped table-condensed table-hover">
+        <table st-table="displayedCollection" st-safe-src="appservers.content" class="table table-striped table-condensed table-hover">
             <thead>
             <td colspan="2">
                 <label for="items-bottom">items by page</label>
-                <input class="input-sm form-control" name="items" id="items-top" type="number"
-                       ng-model="itemsByPage"/>
+                <input class="input-sm form-control" name="items" id="items-top" type="number" ng-model="itemsByPage"/>
             </td>
             <td colspan="5" class="text-center">
                 <div st-pagination="" st-items-by-page="itemsByPage" st-template="pagination-custom.html"></div>
@@ -38,13 +36,12 @@
             </tr>
             <tr>
                 <th><input st-search="id" placeholder="search for id" class="input-sm form-control" type="search"/></th>
-                <th><input st-search="hostname" placeholder="search for hostname" class="input-sm form-control"
-                           type="search"/></th>
+                <th><input st-search="hostname" placeholder="search for hostname" class="input-sm form-control" type="search"/></th>
                 <th colspan="5"><input st-search="" class="form-control" placeholder="search other" type="text"/></th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="appserver in displayedCollection">
+            <tr ng-repeat="(index,appserver) in displayedCollection">
                 <td>{{ appserver.id|number }}</td>
                 <td>
                     <mark>{{ appserver.hostname }}</mark>
@@ -56,14 +53,16 @@
                 <td class="text-nowrap">{{ appserver.created|date }}</td>
                 <td class="text-nowrap">{{ appserver.lastchanged|date }}</td>
                 <td class="text-nowrap">{{ appserver.lastchangedby }}</td>
+                <td>
+                    <button type="button" class="btn btn-danger" data-ng-click="removeRow($index,appserver.id)">Remove</button>
+                </td>
             </tr>
             </tbody>
             <tfoot>
             <tr>
                 <td colspan="2">
                     <label for="items-bottom">items by page</label>
-                    <input class="input-sm form-control" name="items" id="items-bottom" type="number"
-                           ng-model="itemsByPage"/>
+                    <input class="input-sm form-control" name="items" id="items-bottom" type="number" ng-model="itemsByPage"/>
                 </td>
                 <td colspan="5" class="text-center">
                     <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="20"></div>
